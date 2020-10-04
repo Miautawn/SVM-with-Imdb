@@ -1,7 +1,7 @@
 How it works:
 1) The dataset is pulled from http://www.cs.cmu.edu/~ark/personas/
 2) The data is cleaned and vectorized with TF-IDF
-3) The SVM will try to predict the film label
+3) The SVM will try to predict the film genre
 
 How to run it:
 1) download plot_summaries and meta_data files, place them both into "data" folder 
