@@ -60,45 +60,14 @@ data["genre"] = genres
 data = data[data["genre"] != "null"]
 data = data.drop(["movie_id"], axis=1)
 
-import re
-from bs4 import BeautifulSoup
-from nltk.corpus import stopwords
-stoplist = stopwords.words("english")
-
 """
 Text cleaning
 """
 
-def decontracted(phrase):
-    # specific
-    phrase = re.sub(r"won't", "will not", phrase)
-    phrase = re.sub(r"can\'t", "can not", phrase)
+import helperFunctions
 
-    # general
-    phrase = re.sub(r"n\'t", " not", phrase)
-    phrase = re.sub(r"\'re", " are", phrase)
-    phrase = re.sub(r"\'s", " is", phrase)
-    phrase = re.sub(r"\'d", " would", phrase)
-    phrase = re.sub(r"\'ll", " will", phrase)
-    phrase = re.sub(r"\'t", " not", phrase)
-    phrase = re.sub(r"\'ve", " have", phrase)
-    phrase = re.sub(r"\'m", " am", phrase)
-    return phrase
+data["plot"] = helperFunctions.cleanData(data["plot"])
 
-preprocessed_sentences= []
-
-for sentence in tqdm(data["plot"]):
-    sentence = re.sub(r"http\S+", "", sentence)   # Remove URL's from text
-    sentence = BeautifulSoup(sentence, 'lxml').get_text()  # Clean HTML tags
-    sentence = decontracted(sentence)  # to remove shortening of words
-    sentence = re.sub("\S*\d\S*", "", sentence).strip()  # remove words with numbers
-    sentence = re.sub('[^A-Za-z]+', ' ', sentence)  # Remove special characters
-    sentence = ' '.join(e.lower() for e in sentence.split() if e.lower() not in stoplist)  #Experiment with this
-    # Turn into lower case and join into a sentence if a word is not a stopword
-    # I do not apply stemming for better results, i don't know why
-    preprocessed_sentences.append(sentence.strip())
-
-data["plot"] = preprocessed_sentences
 
 """
 Exporting clean dataset
