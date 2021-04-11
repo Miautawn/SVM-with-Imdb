@@ -1,8 +1,10 @@
 import re
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+import nltk
 from nltk.corpus import stopwords
-stoplist = stopwords.words("english")
+
+stoplist = set(stopwords.words('english'))
 
 def decontracted(phrase):
     # specific
@@ -29,6 +31,7 @@ def cleanData(data):
         sentence = decontracted(sentence)  # to remove shortening of words
         sentence = re.sub("\S*\d\S*", "", sentence).strip()  # remove words with numbers
         sentence = re.sub('[^A-Za-z]+', ' ', sentence)  # Remove special characters
+        splitted = sentence.split()
         sentence = ' '.join(e.lower() for e in sentence.split() if e.lower() not in stoplist)  #Experiment with this
         # Turn into lower case and join into a sentence if a word is not a stopword
         # I do not apply stemming for better results, i don't know why
