@@ -12,5 +12,9 @@ A python project that tries to predict movie genre with from its description SVM
 
 ## How to run it:
 1) download `plot_summaries.txt` and `movie_metadata.tsv` files, place them both into "data" folder 
-2) Run dataExtraction.py in order to extract clean data
-3) Run SVM.py to train and run the model, it will print out accuracy and will ask you to input sentences for further classification
+2) install dependencies using pipenv:
+```shell
+>> pipenv install --ignore-pipfile
+```
+4) Run dataExtraction.py in order to extract clean data
+5) Run SVM.py to train and run the model, it will print out accuracy and will ask you to input sentences for further classification
